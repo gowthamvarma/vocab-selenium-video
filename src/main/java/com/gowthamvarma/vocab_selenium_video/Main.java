@@ -1,7 +1,9 @@
 package com.gowthamvarma.vocab_selenium_video;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ import com.gowthamvarma.vocab_selenium_video.recorder.VideoReord;
 
 public class Main {
 
+
+	private static String string;
 
 	public static void main(String[] args) {
 		
@@ -73,27 +77,151 @@ public class Main {
 			makeVideoList(language,words,alphabet.charAt(i));
 		}
 		
-	
+		//cetateThumbnailIntroOurto();
 	}
 	
+	private static void cetateThumbnailIntroOurto() {
+		
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		
+		for (int i = 0; i < alphabet.length(); i++) {
+			VideoReord.record("file:///" + "E:\\vocab\\te\\assets\\thumbnail\\" + (i+ 1) + ".html", 
+					1000 * 8 , "E:\\vocab\\te\\assets\\video-intro-ourto\\","" + alphabet.charAt(i));
+		}
+		
+		VideoReord.record("file:///" + "E:\\vocab\\te\\assets\\intro\\1.html", 
+				1000 * 8 , "E:\\vocab\\te\\assets\\video-intro-ourto\\","intro-1");
+		VideoReord.record("file:///" + "E:\\vocab\\te\\assets\\intro\\2.html", 
+				1000 * 8 , "E:\\vocab\\te\\assets\\video-intro-ourto\\","intro-2");
+		VideoReord.record("file:///" + "E:\\vocab\\te\\assets\\intro\\3.html", 
+				1000 * 8 , "E:\\vocab\\te\\assets\\video-intro-ourto\\","intro-3");
+		
+		VideoReord.record("file:///" + "E:\\vocab\\te\\assets\\outro\\1.html", 
+				1000 * 10 , "E:\\vocab\\te\\assets\\video-intro-ourto\\","outro-1");
+		
+	}
+
 	private static void makeVideoList(String language, List<String> words, char charAt) {
-		String path = Constants.DOWNLAOD_DIR + language + "\\scripts\\" + "list-" + charAt + ".txt" ;
+		String path = Constants.DOWNLAOD_DIR + language + "\\assets\\scripts\\" + "list-" + charAt + ".txt" ;
 		List<String> content = new ArrayList<>();
+		
+		List<String> files = new ArrayList<>();
+		List<String> wordsList = new ArrayList<>();
+		
+		wordsList.add("thumbnail");
+		wordsList.add("intro-1");
+		wordsList.add("intro-2");
+		wordsList.add("intro-3");
+		
+		files.add(Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\" +  charAt + ".avi");
+		files.add(Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\intro-1.avi");
+		files.add(Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\intro-2.avi");
+		files.add(Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\intro-3.avi");
+		
+		// intro
+		
+		content.add("file '" + Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\" +  charAt + ".avi'");
+		
+		content.add("file '" + Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\intro-1.avi'");
+		content.add("file '" + Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\intro-2.avi'");
+		content.add("file '" + Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\intro-3.avi'");
+		
 		for (int i = 0; i < words.size(); i++) {
 			if(words.get(i).charAt(0) == charAt) {
 				File file = new File(Constants.DOWNLAOD_DIR + language + "\\video\\" + words.get(i) + ".avi");
 				if(file.exists()) {
 					content.add("file '" + Constants.DOWNLAOD_DIR + language + "\\video\\" +  words.get(i) + ".avi'");
+					
+					wordsList.add(words.get(i));
+					files.add(Constants.DOWNLAOD_DIR + language + "\\video\\" +  words.get(i) + ".avi");
 				}
 			}
 		}
+		
+		// outro
+		content.add("file '" + Constants.DOWNLAOD_DIR + language + "\\assets\\video-intro-ourto\\outro-1.avi'");
+		
 		Util.writeArrayToFile(path, content);
 		
-		String pathScript = Constants.DOWNLAOD_DIR + language + "\\scripts\\" + "run-" + charAt + ".bat";
+		String pathScript = Constants.DOWNLAOD_DIR + language + "\\assets\\scripts\\" + "run-" + charAt + ".bat";
 		List<String> contentScript = new ArrayList<>();
 		contentScript.add("E:\\housie\\ffmpeg\\bin\\ffmpeg.exe -f concat -safe 0 -i " + path + " -c copy "
-				+ Constants.DOWNLAOD_DIR + language + "\\scripts\\out-" + charAt + ".avi");
+				+ Constants.DOWNLAOD_DIR + language + "\\assets\\raw\\out-" + charAt + ".avi");
 		Util.writeArrayToFile(pathScript, contentScript);
+		
+		List<String> contentDuration = new ArrayList<>();
+		//video lengths
+		int duration = 0;
+		for (int i = 0; i < wordsList.size(); i++) {
+			//System.out.println(wordsList.get(i) +  " " + formatDuration(duration));
+			contentDuration.add(wordsList.get(i) +  " " + formatDuration(duration));
+			duration += extractDuration(files.get(i));
+		}
+		String pathDuration = Constants.DOWNLAOD_DIR + language + "\\assets\\duration\\" + "run-" + charAt + ".txt";
+		Util.writeArrayToFile(pathDuration, contentDuration);
+	}
+
+	private static String formatDuration(int timeInSeconds) {
+		int hours = timeInSeconds / 3600;
+	    int secondsLeft = timeInSeconds - hours * 3600;
+	    int minutes = secondsLeft / 60;
+	    int seconds = secondsLeft - minutes * 60;
+
+	    String formattedTime = "";
+	    if (hours < 10) {
+	    	formattedTime += "0";
+	    }
+	        
+	    formattedTime += hours + ":";
+
+	    if (minutes < 10) {
+	    	formattedTime += "0";
+	    }
+	    formattedTime += minutes + ":";
+
+	    if (seconds < 10) {
+	    	formattedTime += "0";
+	    }
+	    formattedTime += seconds ;
+
+	    return formattedTime;
+	}
+
+	private static int extractDuration(String file) {
+		int dur = 0;
+		String duration = "";
+		try {
+			ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c",
+					"E:\\housie\\ffmpeg\\bin\\ffprobe -i " + file + " -show_format");
+			builder.redirectErrorStream(true);
+			Process p = builder.start();
+			BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line;
+			while (true) {
+				line = r.readLine();
+				if (line == null) {
+					break;
+				}
+				if(line.indexOf("duration") >= 0) {
+					//System.out.println(line);
+					duration = line;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//System.out.println(duration);
+		duration = duration.replaceAll("duration=", "");
+		try {
+			double temp = Double.valueOf(duration);
+			dur = (int) temp;
+			//System.out.println(temp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dur;
 	}
 
 	private static void inspect(String language, List<String> words) {
