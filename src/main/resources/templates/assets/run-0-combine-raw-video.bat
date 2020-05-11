@@ -1,0 +1,29 @@
+
+mkdir E:\vocab\te\assets\raw\
+
+call E:\vocab\te\assets\scripts\run-a.bat
+call E:\vocab\te\assets\scripts\run-b.bat
+call E:\vocab\te\assets\scripts\run-c.bat
+call E:\vocab\te\assets\scripts\run-d.bat
+call E:\vocab\te\assets\scripts\run-e.bat
+call E:\vocab\te\assets\scripts\run-f.bat
+call E:\vocab\te\assets\scripts\run-g.bat
+call E:\vocab\te\assets\scripts\run-h.bat
+call E:\vocab\te\assets\scripts\run-i.bat
+call E:\vocab\te\assets\scripts\run-j.bat
+call E:\vocab\te\assets\scripts\run-k.bat
+call E:\vocab\te\assets\scripts\run-l.bat
+call E:\vocab\te\assets\scripts\run-m.bat
+call E:\vocab\te\assets\scripts\run-n.bat
+call E:\vocab\te\assets\scripts\run-o.bat
+call E:\vocab\te\assets\scripts\run-p.bat
+call E:\vocab\te\assets\scripts\run-q.bat
+call E:\vocab\te\assets\scripts\run-r.bat
+call E:\vocab\te\assets\scripts\run-s.bat
+call E:\vocab\te\assets\scripts\run-t.bat
+call E:\vocab\te\assets\scripts\run-u.bat
+call E:\vocab\te\assets\scripts\run-v.bat
+call E:\vocab\te\assets\scripts\run-w.bat
+call E:\vocab\te\assets\scripts\run-x.bat
+call E:\vocab\te\assets\scripts\run-y.bat
+call E:\vocab\te\assets\scripts\run-z.bat

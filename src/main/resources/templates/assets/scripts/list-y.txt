@@ -1,0 +1,5 @@
+file 'E:\vocab\te\assets\video-intro-ourto\y.avi'
+file 'E:\vocab\te\assets\video-intro-ourto\intro-1.avi'
+file 'E:\vocab\te\assets\video-intro-ourto\intro-2.avi'
+file 'E:\vocab\te\assets\video-intro-ourto\intro-3.avi'
+file 'E:\vocab\te\assets\video-intro-ourto\outro-1.avi'

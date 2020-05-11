@@ -1,0 +1,4 @@
+thumbnail 00:00:00
+intro-1 00:00:08
+intro-2 00:00:16
+intro-3 00:00:24

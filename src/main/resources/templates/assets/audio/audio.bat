@@ -1,0 +1,1 @@
+E:\housie\ffmpeg\bin\ffmpeg.exe -f concat -safe 0 -i E:\vocab\te\assets\audio\audio.txt -c copy E:\vocab\te\assets\audio\looped.mp3
